@@ -4,6 +4,8 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import NotificationsList from "./src/components/NotificationList";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import Animated, { SlideInDown, SlideInUp } from "react-native-reanimated";
+import SwipeUpToOpen from "./src/components/SwipeUpToOpen";
 
 export default function App() {
   const [date, setDate] = useState(dayjs());
@@ -16,27 +18,29 @@ export default function App() {
 
   return (
     <ImageBackground source={wallpaper} style={StyleSheet.absoluteFill}>
-      <View style={styles.header}>
+      <Animated.View entering={SlideInUp} style={styles.header}>
         <Ionicons name="ios-lock-closed" size={20} color="white" />
         <Text style={styles.date}>{date.format("dddd, DD MMMM")}</Text>
         <Text style={styles.time}>{date.format("hh:mm")}</Text>
-      </View>
+      </Animated.View>
 
       {/* Notification List */}
       <NotificationsList />
 
       {/* footer */}
-      <View style={styles.footer}>
+      <Animated.View entering={SlideInDown} style={styles.footer}>
         {/* flashlight icon */}
         <View style={styles.icon}>
           <MaterialCommunityIcons name="flashlight" size={24} color="white" />
         </View>
 
+        <SwipeUpToOpen />
+
         {/* camera icon */}
         <View style={styles.icon}>
           <Ionicons name="ios-camera" size={24} color="white" />
         </View>
-      </View>
+      </Animated.View>
     </ImageBackground>
   );
 }
